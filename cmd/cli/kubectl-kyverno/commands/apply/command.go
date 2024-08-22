@@ -38,6 +38,7 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
 	"sigs.k8s.io/yaml"
+	log "github.com/sirupsen/logrus"
 )
 
 const divider = "----------------------------------------------------------------------"
@@ -319,6 +320,11 @@ func (c *ApplyCommandConfig) applyPolicytoResource(
 		}
 		responses = append(responses, ers...)
 	}
+	for _, policy := range validPolicies {
+		if policy.GetNamespace() == "" && policy.GetKind() == "Policy" {
+			log.Warn("Policy with no namespace detected. Ensure that namespaced policies are correctly loaded.")
+		}
+	}
 	return &rc, resources, responses, nil
 }
 
@@ -380,6 +386,12 @@ func (c *ApplyCommandConfig) loadPolicies(skipInvalidPolicies SkippedInvalidPoli
 				vapBindings = append(vapBindings, loaderResults.VAPBindings...)
 			}
 		}
+		for _, policy := range policies {
+			if policy.GetNamespace() == "" && policy.GetKind() == "Policy" {
+				log.Warn("Namespace is empty for a namespaced Policy. This might cause incorrect report generation.")
+			}
+		}
+	
 	}
 
 	return nil, nil, skipInvalidPolicies, nil, policies, vaps, vapBindings, nil
