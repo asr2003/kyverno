@@ -390,9 +390,7 @@ func (c *ApplyCommandConfig) loadPolicies(skipInvalidPolicies SkippedInvalidPoli
 				fmt.Println("Namespace is empty for a namespaced Policy. This might cause incorrect report generation.")
 			}
 		}
-	
 	}
-
 	return nil, nil, skipInvalidPolicies, nil, policies, vaps, vapBindings, nil
 }
 
