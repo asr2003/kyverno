@@ -344,7 +344,7 @@ func TestComputePolicyReportResultsPerPolicy(t *testing.T) {
 }
 
 func TestNamespacedPolicyReportGeneration(t *testing.T) {
-	results, err := policy.Load(nil, "", "../_testdata/resources/namespace.yaml")
+	results, err := policy.Load(nil, "", "../_testdata/policies/namespace-policy.yaml")
 	assert.NilError(t, err)
 	assert.Equal(t, len(results.Policies), 1)
 	policy := results.Policies[0]
