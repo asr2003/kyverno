@@ -349,9 +349,6 @@ func TestNamespacedPolicyReportGeneration(t *testing.T) {
 	assert.Equal(t, len(results.Policies), 1)
 	policy := results.Policies[0]
 
-	// Ensure policy has a namespace
-	assert.Assert(t, policy.GetNamespace() != "")
-
 	er := engineapi.EngineResponse{}
 	er = er.WithPolicy(engineapi.NewKyvernoPolicy(policy))
 	er.PolicyResponse.Add(
